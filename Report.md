@@ -1,5 +1,8 @@
 # Exercise 2
 
+Ilmari Hämäläinen 894931
+Zigi Wang 101699682
+
 ## 1. Goal
 
 The goal of this assignment is to help students gain hands-on experience with implementing hash functions for digital signatures, focusing specifically on MD5 and SHA-3. The purpose and motivation behind this experiment include:
