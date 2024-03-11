@@ -1,7 +1,7 @@
 # Exercise 2
 
 Ilmari Hämäläinen 894931
-Zigi Wang 101699682
+Ziqi Wang 101699682
 
 ## 1. Goal
 
