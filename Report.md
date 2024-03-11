@@ -14,7 +14,15 @@ The goal of this assignment is to help students gain hands-on experience with im
 
 ## 2. Experiment Setup
 
+- Installing MD5 library to Arduino IDE
+- Creating the sketch for MD5 use
+- Testing the sketch
+
 ## 3. Results & Conclusion
+
+![hash computation image](image.png)
+
+Result of MD5 hash values of inputs "hello world" and "The quick brown fox jumps over the lazy dog".
 
 ## 4. Given questions
 
@@ -71,3 +79,28 @@ Case study:
 3. **Collision Resistance Break**: The hash function is considered broken in terms of collision resistance if it's possible to find two distinct inputs that produce the same output hash, more efficiently than brute force.
 
 ## Sketch
+```
+#include <MD5.h>
+
+void setup()
+{
+  //initialize serial
+  Serial.begin(9600);
+  while (!Serial);
+  //give it a second
+  delay(1000);
+
+  //MD5 hash
+  Serial.print("The quick brown fox jumps over the lazy dog hash: ");
+  unsigned char* hash=MD5::make_hash("The quick brown fox jumps over the lazy dog");
+  //generate the digest (hex encoding) of our hash
+  char *md5str = MD5::make_digest(hash, 16);
+  free(hash);
+  //print it on our serial monitor
+  Serial.println(md5str);
+}
+
+void loop()
+{
+}
+```
