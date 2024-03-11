@@ -82,6 +82,7 @@ Case study:
 3. **Collision Resistance Break**: The hash function is considered broken in terms of collision resistance if it's possible to find two distinct inputs that produce the same output hash, more efficiently than brute force.
 
 ## Sketch
+MD5 sketch
 ```
 #include <MD5.h>
 
@@ -105,5 +106,32 @@ void setup()
 
 void loop()
 {
+}
+```
+SHA3 sketch
+```
+#include <SHA3.h> 
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial); 
+
+  SHA3 sha3(256); 
+  uint8_t *hashOutput;
+
+  // input data for testing
+  const char* input = "Hello, SHA-3!"; 
+
+  sha3.doUpdate(input, strlen(input));  // Add data to be hashed
+  hashOutput = sha3.doFinal();  // Finalize and get the hash
+
+  for (int i = 0; i < sha3.hashSize(); i++) {
+    Serial.print("0123456789abcdef"[hashOutput[i] >> 4]);
+    Serial.print("0123456789abcdef"[hashOutput[i] & 0xf]);
+  }
+  Serial.println();
+}
+
+void loop() {
 }
 ```
