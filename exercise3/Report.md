@@ -23,8 +23,51 @@ Brute force
 - 
 
 ## 3. Results & Conclusion
+### Result of connecting to a specific network with password
+```
+Scanning available networks...
+** Scan Networks **
+number of available networks:10
+0) iPhone (Ilmari)	Signal: -45 dBm	Encryption: WPA2
+1) aalto open	Signal: -69 dBm	Encryption: None
+2) Comnet_free	Signal: -72 dBm	Encryption: WPA2
+3) aalto	Signal: -73 dBm	Encryption: Unknown
+4) aalto open	Signal: -73 dBm	Encryption: None
+5) eduroam	Signal: -73 dBm	Encryption: Unknown
+6) aalto	Signal: -73 dBm	Encryption: Unknown
+7) eduroam	Signal: -74 dBm	Encryption: Unknown
+8) eduroam	Signal: -74 dBm	Encryption: Unknown
+9) eduroam	Signal: -75 dBm	Encryption: Unknown
+Scanning available networks...
+** Scan Networks **
+number of available networks:10
+0) iPhone (Ilmari)	Signal: -47 dBm	Encryption: WPA2
+1) THE LAB	Signal: -72 dBm	Encryption: WPA2
+2) aalto	Signal: -76 dBm	Encryption: Unknown
+3) aalto open	Signal: -76 dBm	Encryption: None
+4) Comnet_free	Signal: -76 dBm	Encryption: WPA2
+5) aalto	Signal: -77 dBm	Encryption: Unknown
+6) eduroam	Signal: -77 dBm	Encryption: Unknown
+7) aalto open	Signal: -78 dBm	Encryption: None
+8) aalto	Signal: -78 dBm	Encryption: Unknown
+9) aalto open	Signal: -78 dBm	Encryption: None
+Attempting to connect to WPA SSID: iPhone (Ilmari)
+You're connected to the networkSSID: iPhone (Ilmari)
+BSSID: D2:34:FF:B6:7B:2A
+signal strength (RSSI):-40
+Encryption Type:4
 
-
+IP Address: 172.20.10.9
+172.20.10.9
+MAC address: 4C:EB:D6:4C:9C:E0
+```
+After scanning for available networks for three rounds, script connects to iPhone (Ilmari) with given password. 
+After succesful connection, following information of the network is printed:
+- BSSID
+- Signal strength
+- Encryption type
+- IP address
+- MAC address
 
 ## 4. Answer to the given questions
 
@@ -54,6 +97,283 @@ We found three of them:
 
 ## 5. Annex
 
-```C
-
+### Arduino script for connecting to a specific network with password
 ```
+/*
+
+ This script prints the board's MAC address, and
+
+ scans for available Wifi networks using the NINA module.
+
+ Every ten seconds, it scans again. After scanning for 3 rounds,
+
+ this script connects to a specific network (passwork is excluded in the submit).
+
+
+ */
+
+#include <SPI.h>
+#include <WiFiNINA.h>
+
+char ssid[] = "iPhone (Ilmari)";      // SSID
+char pass[] = "aakkoset";             // password
+int status = WL_IDLE_STATUS; 
+int roundCount = 0;                   // count to keep count of scanning rounds
+
+void setup() {
+
+  //Initialize serial and wait for port to open:
+
+  Serial.begin(9600);
+
+  while (!Serial) {
+
+    ; // wait for serial port to connect.
+
+  }
+
+  // check for the WiFi module:
+
+  if (WiFi.status() == WL_NO_MODULE) {
+
+    Serial.println("Communication with WiFi module failed!");
+
+    // don't continue
+
+    while (true);
+
+  }
+
+  // print MAC address:
+
+  byte mac[6];
+
+  WiFi.macAddress(mac);
+
+  Serial.print("MAC: ");
+
+  printMacAddress(mac);
+}
+
+
+void loop() {
+
+  // scan for existing networks for 3 rounds:
+
+  if (roundCount == 2) {
+
+    // connect to the network
+    while (status != WL_CONNECTED) {
+
+    Serial.print("Attempting to connect to WPA SSID: ");
+
+    Serial.println(ssid);
+
+    // Connect to WPA/WPA2 network:
+
+    status = WiFi.begin(ssid, pass);
+
+    // wait 10 seconds for connection:
+
+    delay(10000);
+
+    };
+
+    // connected: print out the data:
+
+    Serial.print("You're connected to the network");
+
+    printCurrentNet();
+
+    printWifiData();
+
+  };
+
+  if (roundCount < 2) {
+    Serial.println("Scanning available networks...");
+
+    listNetworks();
+
+    delay(10000);
+
+  }
+  roundCount++;
+
+}
+
+void listNetworks() {
+
+  // scan for nearby networks:
+
+  Serial.println("** Scan Networks **");
+
+  int numSsid = WiFi.scanNetworks();
+
+  if (numSsid == -1) {
+
+    Serial.println("Couldn't get a wifi connection");
+
+    while (true);
+
+  }
+
+  // print the list of networks seen:
+
+  Serial.print("number of available networks:");
+
+  Serial.println(numSsid);
+
+  // print the network number and name for each network found:
+
+  for (int thisNet = 0; thisNet < numSsid; thisNet++) {
+
+    Serial.print(thisNet);
+
+    Serial.print(") ");
+
+    Serial.print(WiFi.SSID(thisNet));
+
+    Serial.print("\tSignal: ");
+
+    Serial.print(WiFi.RSSI(thisNet));
+
+    Serial.print(" dBm");
+
+    Serial.print("\tEncryption: ");
+
+    printEncryptionType(WiFi.encryptionType(thisNet));
+
+  }
+}
+
+void printEncryptionType(int thisType) {
+
+  // read the encryption type and print out the name:
+
+  switch (thisType) {
+
+    case ENC_TYPE_WEP:
+
+      Serial.println("WEP");
+
+      break;
+
+    case ENC_TYPE_TKIP:
+
+      Serial.println("WPA");
+
+      break;
+
+    case ENC_TYPE_CCMP:
+
+      Serial.println("WPA2");
+
+      break;
+
+    case ENC_TYPE_NONE:
+
+      Serial.println("None");
+
+      break;
+
+    case ENC_TYPE_AUTO:
+
+      Serial.println("Auto");
+
+      break;
+
+    case ENC_TYPE_UNKNOWN:
+
+    default:
+
+      Serial.println("Unknown");
+
+      break;
+
+  }
+}
+
+void printMacAddress(byte mac[]) {
+
+  for (int i = 5; i >= 0; i--) {
+
+    if (mac[i] < 16) {
+
+      Serial.print("0");
+
+    }
+
+    Serial.print(mac[i], HEX);
+
+    if (i > 0) {
+
+      Serial.print(":");
+
+    }
+
+  }
+
+  Serial.println();
+}
+
+void printCurrentNet() {
+
+  // print the SSID of the network you're attached to:
+
+  Serial.print("SSID: ");
+
+  Serial.println(WiFi.SSID());
+
+  // print the MAC address of the router you're attached to:
+
+  byte bssid[6];
+
+  WiFi.BSSID(bssid);
+
+  Serial.print("BSSID: ");
+
+  printMacAddress(bssid);
+
+  // print the received signal strength:
+
+  long rssi = WiFi.RSSI();
+
+  Serial.print("signal strength (RSSI):");
+
+  Serial.println(rssi);
+
+  // print the encryption type:
+
+  byte encryption = WiFi.encryptionType();
+
+  Serial.print("Encryption Type:");
+
+  Serial.println(encryption, HEX);
+
+  Serial.println();
+}
+
+void printWifiData() {
+
+  // print your board's IP address:
+
+  IPAddress ip = WiFi.localIP();
+
+  Serial.print("IP Address: ");
+
+  Serial.println(ip);
+
+  Serial.println(ip);
+
+  // print your MAC address:
+
+  byte mac[6];
+
+  WiFi.macAddress(mac);
+
+  Serial.print("MAC address: ");
+
+  printMacAddress(mac);
+}
+```
+### Arduino script for attempting to connect to a specific network by brute forcing the password
