@@ -23,8 +23,10 @@ Brute force
 - 
 
 ## 3. Results & Conclusion
+
 ### Result of connecting to a specific network with password
-```
+
+```shell
 Scanning available networks...
 ** Scan Networks **
 number of available networks:10
@@ -41,10 +43,10 @@ number of available networks:10
 Scanning available networks...
 ** Scan Networks **
 number of available networks:10
-0) iPhone (Ilmari)	Signal: -47 dBm	Encryption: WPA2
-1) THE LAB	Signal: -72 dBm	Encryption: WPA2
-2) aalto	Signal: -76 dBm	Encryption: Unknown
-3) aalto open	Signal: -76 dBm	Encryption: None
+0) iPhone (Ilmari)  Signal: -47 dBm	Encryption: WPA2
+1) THE LAB  Signal: -72 dBm	Encryption: WPA2
+2) aalto  Signal: -76 dBm	Encryption: Unknown
+3) aalto open Signal: -76 dBm	Encryption: None
 4) Comnet_free	Signal: -76 dBm	Encryption: WPA2
 5) aalto	Signal: -77 dBm	Encryption: Unknown
 6) eduroam	Signal: -77 dBm	Encryption: Unknown
@@ -61,8 +63,10 @@ IP Address: 172.20.10.9
 172.20.10.9
 MAC address: 4C:EB:D6:4C:9C:E0
 ```
+
 After scanning for available networks for three rounds, script connects to iPhone (Ilmari) with given password. 
 After succesful connection, following information of the network is printed:
+
 - BSSID
 - Signal strength
 - Encryption type
@@ -98,7 +102,8 @@ We found three of them:
 ## 5. Annex
 
 ### Arduino script for connecting to a specific network with password
-```
+
+```C
 /*
 
  This script prints the board's MAC address, and
@@ -376,4 +381,5 @@ void printWifiData() {
   printMacAddress(mac);
 }
 ```
+
 ### Arduino script for attempting to connect to a specific network by brute forcing the password
