@@ -24,7 +24,7 @@ The goal of this assignment is to help students gain hands-on experience with im
 
 ## 3. Results & Conclusion
 
-![hash computation image](image.png)
+![hash computation image](images/image.png)
 
 Result of MD5 hash values of inputs "hello world" and "The quick brown fox jumps over the lazy dog".
 
