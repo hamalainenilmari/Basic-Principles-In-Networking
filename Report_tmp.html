@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Report.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="exercise-2">Exercise 2</h1>
+<p>Ilmari Hämäläinen 894931§
+Ziqi Wang 101699682</p>
+<h2 id="1-goal">1. Goal</h2>
+<p>The goal of this assignment is to help students gain hands-on experience with implementing hash functions for digital signatures, focusing specifically on MD5 and SHA-3. The purpose and motivation behind this experiment include:</p>
+<ul>
+<li>
+<p>By implementing MD5 and SHA-3, we'll get a deeper understanding of how hash functions work, including their processes of converting variable-length messages into fixed-length outputs.</p>
+</li>
+<li>
+<p>The assignment aims to demonstrate the role of hash functions in digital signatures, showcasing how they contribute to the integrity and authenticity of digital communications.</p>
+</li>
+<li>
+<p>Through the implementation of both MD5 and SHA-3, the assignment encourages comparing and contrasting these two algorithms, understanding their strengths, weaknesses, and suitability for security applications.</p>
+</li>
+<li>
+<p>The questions in the assignment guide us to think critically about the security aspects of hash functions, their resistance to attacks, and the implications of a hash algorithm being &quot;broken.&quot;</p>
+</li>
+</ul>
+<h2 id="2-experiment-setup">2. Experiment Setup</h2>
+<ul>
+<li>Installing MD5 library to Arduino IDE</li>
+<li>Creating the sketch for MD5 use</li>
+<li>Testing the sketch</li>
+</ul>
+<h2 id="3-results--conclusion">3. Results &amp; Conclusion</h2>
+<p><img src="file:///home/ilmarih/networking/Basic-Principles-In-Networking/image.png" alt="hash computation image"></p>
+<p>Result of MD5 hash values of inputs &quot;hello world&quot; and &quot;The quick brown fox jumps over the lazy dog&quot;.</p>
+<h2 id="4-given-questions">4. Given questions</h2>
+<h3 id="of-the-two-mentioned-hash-function-would-you-use-one-for-security-application-why-if-not-provide-an-alternative">Of the two mentioned hash function, would you use one for Security Application? Why? If not, provide an alternative</h3>
+<p>My choice is SHA-3 over MD-5.</p>
+<p>MD5 has been found to be vulnerable to collision attacks, where two different inputs can produce the same hash output. This undermines the hash function's integrity and makes it unsuitable for applications where data security and integrity are paramount, such as in digital signatures, SSL certificates, and secure message transmission.</p>
+<p>SHA-3 is part of the Secure Hash Algorithm family, developed to address the vulnerabilities found in earlier hash functions like MD5 and SHA-1. SHA-3 is based on the Keccak algorithm, which was selected through a public competition aimed at finding a robust hash function resistant to known types of cryptographic attacks. SHA-3 provides stronger security guarantees and is designed to be resistant to collision attacks, making it suitable for security-critical applications.</p>
+<h3 id="please-explain-in-brief-what-makes-hash-functions-resistant-to-attacks-provide-an-exemplary-brief-case-study">Please explain in brief what makes hash functions resistant to attacks. Provide an exemplary brief case study</h3>
+<p>Hash functions are designed to be resistant to attacks through:</p>
+<ul>
+<li>
+<p>It should be computationally infeasible to find any input which hashes to a given output. This means, given a hash value <code>h</code>, it should be extremely hard to find any message <code>m</code> such that <code>hash(m) = h</code>.</p>
+</li>
+<li>
+<p>Second Pre-image Resistance: Given an input <code>m1</code>, it should be computationally infeasible to find another input <code>m2 (m1 ≠ m2)</code> such that <code>hash(m1) = hash(m2)</code>.</p>
+</li>
+<li>
+<p>Collision Resistance: It should be very hard to find any two distinct inputs <code>m1</code> and <code>m2</code> such that <code>hash(m1) = hash(m2)</code>. It prevents attackers from substituting a legitimate message with a fraudulent one having the same hash.</p>
+</li>
+</ul>
+<p>Case study:</p>
+<blockquote>
+<p>The most famous cryptocurrency, Bitcoin, uses hash functions in its blockchain. Powerful computers, called miners, race each other in brute force searches to try to solve hashes in order to earn the mining rewards of new Bitcoins, as well as processing fees that users pay to record their transactions on the blockchain.</p>
+<p>Solving a hash involves computing a proof-of-work, called a NONCE, or “number used once”, that, when added to the block, causes the block’s hash to begin with a certain number of zeroes. Once a valid proof-of-work is discovered, the block is considered valid and can be added to the blockchain.</p>
+<p>Since each block’s hash is created by a cryptographic algorithm – Bitcoin uses the SHA-256 algorithm – the only way to find a valid proof-of-work is to run guesses through the algorithm until the right number is found that creates a hash that starts with the right number of zeroes. This is what Bitcoin miners are doing, running numbers through a cryptographic algorithm until they guess the valid NONCE.
+Source: <a href="https://corporatefinanceinstitute.com/resources/cryptocurrency/hash-function/">link</a></p>
+</blockquote>
+<h3 id="provide-a-comparison-between-md5-and-sha-3-overall-which-one-do-you-think-performs-better-than-the-other-one">Provide a comparison between MD5 and SHA-3. Overall, which one do you think performs better than the other one?</h3>
+<h4 id="security">Security</h4>
+<ul>
+<li><strong>MD5</strong>: Has been proven vulnerable to collision attacks, where two different inputs can produce the same output hash. This vulnerability severely undermines its security, making it unsuitable for cryptographic security purposes.</li>
+<li><strong>SHA-3</strong>: Offers a significantly higher security level, designed to be resistant to the vulnerabilities that affect MD5 and SHA-1. It's based on the Keccak algorithm, which was selected for its robust security features in a public competition.</li>
+</ul>
+<h4 id="performance">Performance</h4>
+<ul>
+<li><strong>MD5</strong>: Generally faster than SHA-3, making it suitable for non-security critical applications like checksums for file integrity verification where high speed is desired.</li>
+<li><strong>SHA-3</strong>: While secure, is typically slower than MD5 due to its more complex and secure algorithm. The performance difference, however, may not be significant for many applications, and SHA-3's security benefits often outweigh its slower speed.</li>
+</ul>
+<h4 id="hash-length">Hash Length</h4>
+<ul>
+<li><strong>MD5</strong>: Produces a 128-bit hash output, which is shorter and thus less secure against brute-force attacks compared to longer hashes.</li>
+<li><strong>SHA-3</strong>: Provides more flexibility with variable output lengths (224, 256, 384, 512 bits), allowing for stronger security levels suitable for various applications.</li>
+</ul>
+<h3 id="what-does-it-mean-for-a-hash-algorithm-to-be-broken">What does it mean for a hash algorithm to be broken?</h3>
+<ol>
+<li>
+<p><strong>Pre-image Resistance Break</strong>: If it becomes feasible to find an input that hashes to a specific output with less effort than brute force, the algorithm is said to have a pre-image resistance break.</p>
+</li>
+<li>
+<p><strong>Second Pre-image Resistance Break</strong>: This occurs when, given an input and its hash, it's possible to find another input that produces the same hash, more efficiently than by brute force.</p>
+</li>
+<li>
+<p><strong>Collision Resistance Break</strong>: The hash function is considered broken in terms of collision resistance if it's possible to find two distinct inputs that produce the same output hash, more efficiently than brute force.</p>
+</li>
+</ol>
+<h2 id="sketch">Sketch</h2>
+<p>MD5 sketch</p>
+<pre class="hljs"><code><div>#include &lt;MD5.h&gt;
+
+void setup()
+{
+  //initialize serial
+  Serial.begin(9600);
+  while (!Serial);
+  //give it a second
+  delay(1000);
+
+  //MD5 hash
+  Serial.print(&quot;The quick brown fox jumps over the lazy dog hash: &quot;);
+  unsigned char* hash=MD5::make_hash(&quot;The quick brown fox jumps over the lazy dog&quot;);
+  //generate the digest (hex encoding) of our hash
+  char *md5str = MD5::make_digest(hash, 16);
+  free(hash);
+  //print it on our serial monitor
+  Serial.println(md5str);
+}
+
+void loop()
+{
+}
+</div></code></pre>
+<p>SHA3 sketch</p>
+<pre class="hljs"><code><div>#include &lt;SHA3.h&gt; 
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial); 
+
+  SHA3 sha3(256); 
+  uint8_t *hashOutput;
+
+  // input data for testing
+  const char* input = &quot;Hello, SHA-3!&quot;; 
+
+  sha3.doUpdate(input, strlen(input));  // Add data to be hashed
+  hashOutput = sha3.doFinal();  // Finalize and get the hash
+
+  for (int i = 0; i &lt; sha3.hashSize(); i++) {
+    Serial.print(&quot;0123456789abcdef&quot;[hashOutput[i] &gt;&gt; 4]);
+    Serial.print(&quot;0123456789abcdef&quot;[hashOutput[i] &amp; 0xf]);
+  }
+  Serial.println();
+}
+
+void loop() {
+}
+</div></code></pre>
+
+</body>
+</html>
