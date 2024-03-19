@@ -116,7 +116,7 @@ We found three of them:
 #include <WiFiNINA.h>
 
 char ssid[] = "iPhone (Ilmari)";      // SSID
-char pass[] = "aakkoset";             // password
+char pass[] = "somepassword";         // password
 int status = WL_IDLE_STATUS; 
 int roundCount = 0;                   // count to keep count of scanning rounds
 
