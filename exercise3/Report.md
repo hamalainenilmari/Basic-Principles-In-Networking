@@ -20,7 +20,9 @@ Connecting to a network
 
 Brute force
 
-- 
+- Using the same WiFINiNA library as before
+- Creating the sketch for brute forcing the password of a specific network and connecting to the network
+- Testing the sketch
 
 ## 3. Results & Conclusion
 
